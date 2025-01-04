@@ -1,0 +1,19 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  body {
+    background: white;
+  }
+
+  .print-content {
+    box-shadow: none !important;
+  }
+
+  button, 
+  .no-print {
+    display: none !important;
+  }
+}
