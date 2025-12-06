@@ -59,7 +59,7 @@ function TabPanel(props: TabPanelProps) {
       style={{ width: '100%' }}
     >
       {value === index && (
-        <Box sx={{ pt: 3 }}>
+        <Box sx={{ pt: 2 }}>
           {children}
         </Box>
       )}
@@ -140,16 +140,12 @@ export default function Login() {
       if (!authData.user) throw new Error("Erreur lors de la création du compte");
 
       // 2. Créer la société (Tenant)
-      // Note: Ceci devrait idéalement être fait via une Edge Function pour garantir l'atomicité,
-      // mais pour simplifier ici on le fait côté client car les RLS permettront l'insertion initiale.
-      // On suppose que les RLS permettent à un utilisateur authentifié de créer une company.
-      
       const { data: companyData, error: companyError } = await supabase
         .from('companies')
         .insert([
           { 
             name: companyName,
-            email: regEmail, // Email de contact par défaut
+            email: regEmail, 
           }
         ])
         .select()
@@ -176,7 +172,6 @@ export default function Login() {
 
       setSuccessMessage("Compte et société créés avec succès ! Vous allez être redirigé...");
       
-      // Délai pour lire le message
       setTimeout(() => {
           navigate('/');
       }, 2000);
@@ -194,12 +189,12 @@ export default function Login() {
         minHeight: '100vh',
         width: '100vw',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start', // Changé de center à flex-start pour permettre le scroll
         justifyContent: 'center',
         bgcolor: '#f5f5f5',
-        position: 'fixed',
-        top: 0,
-        left: 0,
+        overflowY: 'auto', // Autorise le scroll vertical global
+        pt: 4,
+        pb: 4
       }}
     >
       <CssBaseline />
@@ -220,14 +215,14 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Box sx={{ mb: 4, textAlign: 'center' }}>
+          <Box sx={{ mb: 2, textAlign: 'center' }}>
             <img 
               src={logo} 
               alt="Raiatea Rent Car Logo" 
               style={{ 
-                width: '250px',
+                width: '200px', // Réduit un peu la taille du logo
                 height: 'auto',
-                marginBottom: '1rem',
+                marginBottom: '0.5rem',
                 maxWidth: '100%'
               }} 
             />
@@ -236,7 +231,7 @@ export default function Login() {
           <Paper
             elevation={3}
             sx={{
-              p: 4,
+              p: { xs: 2, sm: 4 }, // Padding responsif
               width: '100%',
               maxWidth: '400px',
               display: 'flex',
@@ -289,7 +284,7 @@ export default function Login() {
                   }}
                 >
                   <StyledTextField
-                    margin="normal"
+                    margin="dense" // Réduit l'espacement
                     required
                     fullWidth
                     id="email"
@@ -299,10 +294,9 @@ export default function Login() {
                     autoFocus
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    sx={{ mb: 2 }}
                   />
                   <StyledTextField
-                    margin="normal"
+                    margin="dense"
                     required
                     fullWidth
                     name="password"
@@ -312,7 +306,6 @@ export default function Login() {
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    sx={{ mb: 3 }}
                   />
                   <Button
                     type="submit"
@@ -320,7 +313,7 @@ export default function Login() {
                     variant="contained"
                     disabled={loading}
                     sx={{
-                      mt: 2,
+                      mt: 3,
                       mb: 2,
                       py: 1.5,
                       fontSize: '1rem',
@@ -340,40 +333,43 @@ export default function Login() {
                   variant="h6" 
                   gutterBottom
                   align="center"
-                  sx={{ mb: 3 }}
+                  sx={{ mb: 2 }}
                 >
                   Lancez votre activité
                 </Typography>
                 
                 <Box component="form" onSubmit={handleRegister} sx={{ mt: 1 }}>
                     <StyledTextField
-                        margin="normal"
+                        margin="dense" // Réduit l'espacement
                         required
                         fullWidth
                         label="Nom de votre société"
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         placeholder="Ex: Moorea Cars"
+                        size="small" // Réduit la hauteur des champs
                     />
                     <StyledTextField
-                        margin="normal"
+                        margin="dense"
                         required
                         fullWidth
                         label="Votre Nom Complet"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
+                        size="small"
                     />
                     <StyledTextField
-                        margin="normal"
+                        margin="dense"
                         required
                         fullWidth
                         label="Email professionnel"
                         type="email"
                         value={regEmail}
                         onChange={(e) => setRegEmail(e.target.value)}
+                        size="small"
                     />
                     <StyledTextField
-                        margin="normal"
+                        margin="dense"
                         required
                         fullWidth
                         label="Mot de passe"
@@ -381,6 +377,7 @@ export default function Login() {
                         value={regPassword}
                         onChange={(e) => setRegPassword(e.target.value)}
                         helperText="Min. 6 caractères"
+                        size="small"
                     />
                     <Button
                         type="submit"
