@@ -77,6 +77,19 @@ export const documentService = {
 
   async createDocument(data: DocumentData) {
     try {
+      // 1. Récupérer l'utilisateur et son company_id
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Utilisateur non connecté');
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('company_id')
+        .eq('id', user.id)
+        .single();
+      
+      if (!profile?.company_id) throw new Error('Société non trouvée pour cet utilisateur');
+
+      // 2. Insérer le document avec le company_id
       const { error } = await supabase
         .from('documents')
         .insert([
@@ -89,7 +102,8 @@ export const documentService = {
             notes: data.notes,
             totalAmount: data.totalAmount,
             status: 'draft',
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            company_id: profile.company_id
           }
         ])
         .select()

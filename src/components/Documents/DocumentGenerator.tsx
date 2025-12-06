@@ -72,7 +72,7 @@ export const DocumentGenerator: React.FC = () => {
         
         // Fetch company info
         const { data: companyData, error: companyError } = await supabase
-          .from('company_info')
+          .from('companies')
           .select('*')
           .single();
 

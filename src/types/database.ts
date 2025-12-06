@@ -9,6 +9,56 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      companies: {
+        Row: {
+          id: string
+          created_at: string
+          name: string
+          email: string | null
+          phone: string | null
+          address: string | null
+          city: string | null
+          postal_code: string | null
+          country: string | null
+          rc_number: string | null
+          n_tahiti: string | null
+          logo_url: string | null
+          website: string | null
+          settings: Json | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          name: string
+          email?: string | null
+          phone?: string | null
+          address?: string | null
+          city?: string | null
+          postal_code?: string | null
+          country?: string | null
+          rc_number?: string | null
+          n_tahiti?: string | null
+          logo_url?: string | null
+          website?: string | null
+          settings?: Json | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          name?: string
+          email?: string | null
+          phone?: string | null
+          address?: string | null
+          city?: string | null
+          postal_code?: string | null
+          country?: string | null
+          rc_number?: string | null
+          n_tahiti?: string | null
+          logo_url?: string | null
+          website?: string | null
+          settings?: Json | null
+        }
+      }
       profiles: {
         Row: {
           id: string
@@ -16,6 +66,7 @@ export interface Database {
           full_name: string | null
           avatar_url: string | null
           role: 'admin' | 'staff'
+          company_id: string | null
         }
         Insert: {
           id: string
@@ -23,6 +74,7 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           role?: 'admin' | 'staff'
+          company_id?: string | null
         }
         Update: {
           id?: string
@@ -30,6 +82,7 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           role?: 'admin' | 'staff'
+          company_id?: string | null
         }
       }
       vehicles: {
@@ -37,6 +90,7 @@ export interface Database {
           id: string
           created_at: string
           updated_at: string
+          company_id: string | null
           brand: string
           model: string
           year: number
@@ -54,6 +108,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           brand: string
           model: string
           year: number
@@ -71,6 +126,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           brand?: string
           model?: string
           year?: number
@@ -90,6 +146,7 @@ export interface Database {
           id: string
           created_at: string
           updated_at: string
+          company_id: string | null
           name: string
           description: string | null
           capacity: number
@@ -105,6 +162,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           name: string
           description?: string | null
           capacity: number
@@ -120,6 +178,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           name?: string
           description?: string | null
           capacity?: number
@@ -137,6 +196,7 @@ export interface Database {
           id: string
           created_at: string
           updated_at: string
+          company_id: string | null
           first_name: string
           last_name: string
           email: string | null
@@ -153,6 +213,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           first_name: string
           last_name: string
           email?: string | null
@@ -169,6 +230,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           first_name?: string
           last_name?: string
           email?: string | null
@@ -187,6 +249,7 @@ export interface Database {
           id: string
           created_at: string
           updated_at: string
+          company_id: string | null
           client_id: string
           vehicle_id: string | null
           bungalow_id: string | null
@@ -201,6 +264,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           client_id: string
           vehicle_id?: string | null
           bungalow_id?: string | null
@@ -215,6 +279,7 @@ export interface Database {
           id?: string
           created_at?: string
           updated_at?: string
+          company_id?: string | null
           client_id?: string
           vehicle_id?: string | null
           bungalow_id?: string | null
