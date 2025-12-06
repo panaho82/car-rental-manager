@@ -1,94 +1,45 @@
-# Raiatea Rent Car - Système de Gestion de Location
+# Raiatea Rental Car - SaaS Multi-tenant
 
-## Description
-Application web de gestion pour "Raiatea Rent Car", permettant la gestion des locations de véhicules et de bungalows. Développée avec React, TypeScript, et Supabase.
+Plateforme de gestion de location de voitures et bungalows (SaaS B2B).
+Architecture moderne Multi-tenant sécurisée par Row Level Security (RLS).
 
-## Fonctionnalités
-- 🚗 Gestion des véhicules
-- 🏠 Gestion des bungalows
-- 👥 Gestion des clients
-- 📅 Système de réservation
-- 💰 Système de facturation
-- 🔐 Authentification et gestion des rôles
+## 🚀 Architecture Technique
 
-## Configuration Technique
+- **Frontend** : React + TypeScript + Vite
+- **Backend / DB** : Supabase (Postgres)
+- **Sécurité** : RLS (Row Level Security) avec isolation par `company_id`
+- **Déploiement** : Render (Static Site)
 
-### Prérequis
-- Node.js (v18+)
-- npm ou yarn
-- Compte Supabase
+## 🛠 Installation & Développement
 
-### Variables d'Environnement
-Créez un fichier `.env` avec :
-```env
-VITE_SUPABASE_URL=https://qskctvadactgyeguosag.supabase.co
-VITE_SUPABASE_ANON_KEY=votre_clé_anon
-VITE_APP_NAME="Raiatea Rent Car"
-VITE_APP_VERSION="1.0.0"
-```
+1. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
 
-### Installation
-1. Clonez le repository
-2. Installez les dépendances :
-```bash
-npm install
-```
-3. Lancez l'application :
-```bash
-npm run dev
-```
+2. **Configurer l'environnement**
+   Copier `.env.example` vers `.env` et ajouter vos clés Supabase.
 
-### Configuration de la Base de Données
-1. Exécutez les scripts SQL dans l'ordre :
-   - `scripts/complete-setup.sql`
-   - `scripts/add-invoicing.sql`
+3. **Lancer en local**
+   ```bash
+   npm run dev
+   ```
 
-### Accès Initial
-- Email : admin@raiatea-rentcar.com
-- Mot de passe : Admin123!
+## 📦 Migration Multi-tenant
 
-## Structure du Projet
+L'application utilise une base de données unique partagée. L'isolation des données entre les sociétés (Tenants) est assurée par le script SQL `scripts/migrate-to-multitenant.sql`.
 
-### Frontend
-```
-src/
-├── components/     # Composants React
-├── hooks/         # Hooks personnalisés
-├── lib/           # Configuration et utilitaires
-├── pages/         # Pages de l'application
-├── types/         # Types TypeScript
-└── styles/        # Styles CSS
-```
+Pour initialiser une nouvelle base de données :
+1. Exécuter les scripts de création de tables standards.
+2. Exécuter `scripts/migrate-to-multitenant.sql` pour activer l'architecture SaaS.
 
-### Base de Données
-Tables principales :
-- profiles
-- vehicles
-- bungalows
-- clients
-- reservations
-- invoices
-- payments
-- invoice_items
-- company_settings
+## ☁️ Déploiement sur Render
 
-## Sécurité
-- Row Level Security (RLS) configuré
-- Politiques d'accès par rôle (admin, staff)
-- Authentification Supabase
+Ce projet est configuré pour un déploiement automatique sur [Render](https://render.com).
 
-## Prochaines Étapes
-- [ ] Interface de gestion des véhicules
-- [ ] Interface de gestion des bungalows
-- [ ] Système de réservation
-- [ ] Système de facturation complet
-- [ ] Rapports et tableaux de bord
-- [ ] Génération de PDF pour les factures
-
-## Support
-Pour toute question ou assistance :
-- Créez une issue dans le repository
-- Contactez l'équipe de développement
-
-## Licence
-Tous droits réservés - Raiatea Rent Car 2025
+1. Connecter votre repo GitHub à Render.
+2. Créer un nouveau "Static Site".
+3. Render détectera automatiquement la configuration dans `render.yaml`.
+4. **Important** : Ajouter les variables d'environnement dans le dashboard Render :
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`

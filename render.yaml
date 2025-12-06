@@ -1,0 +1,18 @@
+services:
+  # Le Frontend React (Static Site)
+  - type: web
+    name: rrcar-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      # Réécriture pour SPA (Single Page App) : toutes les routes non-fichiers vont vers index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_SUPABASE_URL
+        sync: false # À remplir dans le dashboard Render
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false # À remplir dans le dashboard Render
+
